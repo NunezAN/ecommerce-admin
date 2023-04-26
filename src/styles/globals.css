@@ -19,3 +19,15 @@ label {
 .btn-primary {
   @apply text-blue-900 px-4 py-2 bg-inherit border-2 border-black rounded-xl w-full shadow font-bold  hover:bg-blue-900 hover:text-white;
 }
+table.basic {
+  @apply w-full;
+}
+table.basic thead tr td {
+  @apply bg-slate-300;
+}
+table.basic tr td {
+  @apply border border-slate-700 p-1;
+}
+table.basic a {
+  @apply bg-blue-800 text-white py-1 px-2 text-sm rounded-md inline-flex;
+}

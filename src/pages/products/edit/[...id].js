@@ -1,14 +1,29 @@
-import React, { useState } from "react";
-import Layout from "../../../components/Layout";
-import axios from "axios";
+import React, { useEffect, useState } from "react";
+import Layout from "../../../../components/Layout";
 import { useRouter } from "next/router";
+import axios from "axios";
 
-const NewProducts = () => {
+const EditProduct = () => {
+  const router = useRouter();
+  const { id } = router.query;
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
   const [goBack, setGoBack] = useState(false);
-  const router = useRouter();
+
+  useEffect(() => {
+    if (!id) {
+      return;
+    }
+    const fetchData = async () => {
+      const productData = await axios.get("/api/products?id=" + id);
+      console.log(productData.data);
+      setTitle(productData.data.title);
+      setDescription(productData.data.description);
+      setPrice(productData.data.price);
+    };
+    fetchData();
+  }, [id]);
   const handleNewProduct = async (e) => {
     e.preventDefault();
     const data = { title, description, price };
@@ -18,13 +33,13 @@ const NewProducts = () => {
     setPrice("");
     setGoBack(true);
   };
-  if(goBack){
-    router.push("/products")
+  if (goBack) {
+    router.push("/products");
   }
   return (
     <Layout>
       <form onSubmit={handleNewProduct}>
-        <h1 className="">New Product</h1>
+        <h1 className="">Edit Product</h1>
         <label>Product name</label>
         <input
           type="text"
@@ -55,4 +70,4 @@ const NewProducts = () => {
   );
 };
 
-export default NewProducts;
+export default EditProduct;
