@@ -2,14 +2,12 @@ import React, { useEffect, useState } from "react";
 import Layout from "../../../../components/Layout";
 import { useRouter } from "next/router";
 import axios from "axios";
+import ProductForm from "../../../../components/ProductForm";
 
 const EditProduct = () => {
+  const [productInfo, setProductInfo] = useState(null);
   const router = useRouter();
   const { id } = router.query;
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [price, setPrice] = useState("");
-  const [goBack, setGoBack] = useState(false);
 
   useEffect(() => {
     if (!id) {
@@ -17,55 +15,16 @@ const EditProduct = () => {
     }
     const fetchData = async () => {
       const productData = await axios.get("/api/products?id=" + id);
-      console.log(productData.data);
-      setTitle(productData.data.title);
-      setDescription(productData.data.description);
-      setPrice(productData.data.price);
+      setProductInfo(productData.data);
+      // console.log(productData.data);
     };
     fetchData();
   }, [id]);
-  const handleNewProduct = async (e) => {
-    e.preventDefault();
-    const data = { title, description, price };
-    await axios.post("/api/products", data);
-    setTitle("");
-    setDescription("");
-    setPrice("");
-    setGoBack(true);
-  };
-  if (goBack) {
-    router.push("/products");
-  }
+
   return (
     <Layout>
-      <form onSubmit={handleNewProduct}>
-        <h1 className="">Edit Product</h1>
-        <label>Product name</label>
-        <input
-          type="text"
-          placeholder="Product name"
-          required
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-        />
-        <label>Description</label>
-        <textarea
-          type="text"
-          placeholder="Description"
-          required
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-        />
-        <label>Price (in USD)</label>
-        <input
-          type="number"
-          placeholder="Price"
-          required
-          value={price}
-          onChange={(e) => setPrice(e.target.value)}
-        />
-        <button className="btn-primary">Save</button>
-      </form>
+      <h1 className="">Edit Product</h1>
+      {productInfo && (<ProductForm {...productInfo}></ProductForm>)}
     </Layout>
   );
 };
