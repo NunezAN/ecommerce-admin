@@ -1,3 +1,21 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+input,
+textarea {
+  @apply border-2 border-blue-900 rounded-md px-2 py-1 w-full mb-2 bg-inherit focus:border-transparent focus:ring-0 !outline-none;
+}
+input:focus,
+textarea:focus {
+  @apply border-blue-900;
+}
+h1 {
+  @apply text-2xl text-blue-900 mb-2;
+}
+label {
+  @apply text-blue-900;
+}
+.btn-primary {
+  @apply text-blue-900 px-4 py-2 bg-inherit border-2 border-black rounded-xl w-full shadow font-bold  hover:bg-blue-900 hover:text-white;
+}

@@ -8,7 +8,7 @@ const Nav = () => {
   const active = inactive + " bg-gray-300 text-black rounded-l-lg shadow";
   const router = useRouter();
   useEffect(() => {
-    setPath(router.pathname);
+    setPath(`/${router.pathname.split("/")[1]}`);
   }, []);
   return (
     <aside className="text-white p-4 pr-0">
