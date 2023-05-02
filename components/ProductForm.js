@@ -21,6 +21,7 @@ const ProductForm = ({
 
     if (_id) {
       //update
+      //todo-update product
     } else {
       //create
       const data = { title, description, price };
